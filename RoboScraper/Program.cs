@@ -51,8 +51,10 @@ class Program
         Timer timer = new Timer(VerificarNovoProduto, null, 0, intervalo);
 
         // Manter a aplicação rodando
-        Console.WriteLine("Pressione qualquer tecla para sair...");
-        Console.ReadKey();
+        while(true)
+        {
+            Thread.Sleep(Timeout.Infinite);
+        }
     }
 
     static async void VerificarNovoProduto(object state)
@@ -103,8 +105,9 @@ class Program
 
                                 Console.WriteLine(ComparacaoPreco.CompararPreco(mercadoLivre, magazineLuiza));
 
-                                
+                                SendEmail.EnviarEmail(ComparacaoPreco.CompararPreco(mercadoLivre,magazineLuiza), produto.Nome, mercadoLivre, produto.Nome, magazineLuiza);
 
+                                SendZap.verificarMensagem(ComparacaoPreco.CompararPreco(mercadoLivre, magazineLuiza), produto.Nome, mercadoLivre, produto.Nome, magazineLuiza);
                             }
                         }
                     }
