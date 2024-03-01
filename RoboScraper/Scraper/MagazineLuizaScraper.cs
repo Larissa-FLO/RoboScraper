@@ -12,7 +12,8 @@ public class MagazineLuizaScraper
             using (IWebDriver driver = new ChromeDriver())
             {
                 // Abre a página
-                driver.Navigate().GoToUrl($"https://www.magazineluiza.com.br/busca/{descricaoProduto}");
+                string url = $"https://www.magazineluiza.com.br/busca/{descricaoProduto}";
+                driver.Navigate().GoToUrl(url);
 
                 // Aguarda um tempo fixo para permitir que a página seja carregada (você pode ajustar conforme necessário)
                 System.Threading.Thread.Sleep(5000);
@@ -73,6 +74,13 @@ public class MagazineLuizaScraper
         }
 
     }
+
+    public static string PegarLink(string nomeProduto)
+    {
+        string url = $"https://www.magazineluiza.com.br/busca/{nomeProduto.Replace(" ", "+")}";
+        return url;
+    }
+
 }
 
 

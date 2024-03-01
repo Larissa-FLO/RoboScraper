@@ -8,7 +8,7 @@ namespace RoboScraper.ComparacaoDePrecos
 {
     internal class ComparacaoPreco
     {
-        public static string CompararPreco(string precoMerL, string precoMagL)
+        public static string CompararPreco(string precoMerL, string precoMagL, string linkMag, string linkMer)
         {
             char[] removerCaracteres = { 'R', '$', ' ' };
 
@@ -20,11 +20,12 @@ namespace RoboScraper.ComparacaoDePrecos
 
             if (precoMagazine > precoMercado)
             {
-                return "Melhor preço: Mercado Livre";
+                return "Melhor preço: Mercado Livre\n" + $"Link do produto:{linkMer}";
+                
             }
             else if (precoMercado > precoMagazine)
             {
-                return "Melhor preço: Magazine Luíza";
+                return "Melhor preço: Magazine Luíza\n" + $"Link do produto:{linkMag}";
             }
             else
             {

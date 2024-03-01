@@ -69,4 +69,11 @@ public class MercadoLivreScraper
             context.SaveChanges();
         }
     }
+
+    public static string PegarLink(string nomeProduto)
+    {
+        string url = $"https://lista.mercadolivre.com.br/{nomeProduto.Replace(" ", "+")}";
+
+        return url;
+    }
 }

@@ -30,10 +30,9 @@ namespace RoboScraper.Send
                 MailMessage mensagem = new MailMessage(remetente, "larissa.f.oliveira8@aluno.senai.br")
                 {
                     Subject = "Resultado da comparação de preços",
-                    Body = $"Produto do Mercado Livre: {nomeProdutoMercadoLivre} - Preço: {precoProdutoMercadoLivre}\n" +
-                           $"Produto do Magazine Luiza: {nomeProdutoMagazineLuiza} - Preço: {precoProdutoMagazineLuiza}\n" +
-                           $"{Comparacao}. \n"
-
+                    Body = $"Produto do Mercado Livre: {nomeProdutoMercadoLivre}\nPreço: R$ {precoProdutoMercadoLivre}\n" +
+                           $"Produto do Magazine Luiza: {nomeProdutoMagazineLuiza}\nPreço: {precoProdutoMagazineLuiza}\n" +
+                           $"{Comparacao}"
                 };
 
                 // Enviar e-mail

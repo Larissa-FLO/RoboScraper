@@ -44,11 +44,13 @@ class Program
 
     static void Main(string[] args)
     {
+        string optZap = SendZap.verificarMensagem();
+
         // Definir o intervalo de tempo para 5 minutos (300.000 milissegundos)
         int intervalo = 6000;
 
         // Criar um temporizador que dispara a cada 5 minutos
-        Timer timer = new Timer(VerificarNovoProduto, null, 0, intervalo);
+        Timer timer = new Timer(state => VerificarNovoProduto(optZap), null, 0, intervalo);
 
         // Manter a aplicação rodando
         while(true)
@@ -59,6 +61,7 @@ class Program
 
     static async void VerificarNovoProduto(object state)
     {
+        string optZap = state as string;
         string username = "11164448";
         string senha = "60-dayfreetrial";
         string url = "http://regymatrix-001-site1.ktempurl.com/api/v1/produto/getall";
@@ -103,11 +106,21 @@ class Program
                                 MagazineLuizaScraper magazineLuizaScraper = new MagazineLuizaScraper();
                                 string magazineLuiza = magazineLuizaScraper.ObterPreco(produto.Nome, produto.Id);
 
-                                Console.WriteLine(ComparacaoPreco.CompararPreco(mercadoLivre, magazineLuiza));
+                                string linkMag = MagazineLuizaScraper.PegarLink(produto.Nome);
+                                string linkMer = MercadoLivreScraper.PegarLink(produto.Nome);
 
-                                SendEmail.EnviarEmail(ComparacaoPreco.CompararPreco(mercadoLivre,magazineLuiza), produto.Nome, mercadoLivre, produto.Nome, magazineLuiza);
+                                string dadosComparacao = ComparacaoPreco.CompararPreco(mercadoLivre, magazineLuiza, linkMag, linkMer);
 
-                                SendZap.verificarMensagem(ComparacaoPreco.CompararPreco(mercadoLivre, magazineLuiza), produto.Nome, mercadoLivre, produto.Nome, magazineLuiza);
+                                Console.WriteLine(dadosComparacao);
+
+                                SendEmail.EnviarEmail(dadosComparacao, produto.Nome, mercadoLivre, produto.Nome, magazineLuiza);
+                                Console.WriteLine(optZap);
+                                if (optZap != null)
+                                {
+                                    
+                                    SendZap.SendWhatsApp(dadosComparacao, produto.Nome, mercadoLivre, produto.Nome, magazineLuiza, optZap);
+                                }
+
                             }
                         }
                     }
