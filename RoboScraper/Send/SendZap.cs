@@ -20,7 +20,6 @@ public class SendZap
         {
                 Console.WriteLine("Digite o número de celular (com DDD) que receberá a mensagem");
                 string numUsuario = Console.ReadLine();
-                Console.Write(numUsuario);
                 return numUsuario;
                 
             }
