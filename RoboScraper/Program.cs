@@ -20,7 +20,10 @@ public class LogContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=PC03LAB2512\\SENAI;Database=WebScrapingDb2;User Id=sa;Password=senai.123;"); // Substitua "YourConnectionString" pela sua string de conexão
+        optionsBuilder.UseSqlServer(@"Data Source=SQL9001.site4now.net;" +
+                                     "Initial Catalog=db_aa5b20_apialmoxarifado;" +
+                                     "User id=db_aa5b20_apialmoxarifado_admin;" +
+                                     "Password=master@123");
     }
 }
 
@@ -44,13 +47,14 @@ class Program
 
     static void Main(string[] args)
     {
+        string emailResposta = SendEmail.pedirEmail();
         string optZap = SendZap.verificarMensagem();
 
         // Definir o intervalo de tempo para 5 minutos (300.000 milissegundos)
         int intervalo = 6000;
 
         // Criar um temporizador que dispara a cada 5 minutos
-        Timer timer = new Timer(state => VerificarNovoProduto(optZap), null, 0, intervalo);
+        Timer timer = new Timer(state => VerificarNovoProduto(optZap, emailResposta), null, 0, intervalo);
 
         // Manter a aplicação rodando
         while(true)
@@ -59,8 +63,9 @@ class Program
         }
     }
 
-    static async void VerificarNovoProduto(object state)
+    static async void VerificarNovoProduto(object state, object state2)
     {
+        string emailResposta = state2 as string;
         string optZap = state as string;
         string username = "11164448";
         string senha = "60-dayfreetrial";
@@ -113,11 +118,12 @@ class Program
 
                                 Console.WriteLine(dadosComparacao);
 
-                                SendEmail.EnviarEmail(dadosComparacao, produto.Nome, mercadoLivre, produto.Nome, magazineLuiza);
-                                Console.WriteLine(optZap);
+                                Console.Write(emailResposta);
+                                SendEmail.EnviarEmail(dadosComparacao, produto.Nome, mercadoLivre, produto.Nome, magazineLuiza, emailResposta);
+
                                 if (optZap != null)
                                 {
-                                    
+
                                     SendZap.SendWhatsApp(dadosComparacao, produto.Nome, mercadoLivre, produto.Nome, magazineLuiza, optZap);
                                 }
 

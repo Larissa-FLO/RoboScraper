@@ -11,13 +11,21 @@ namespace RoboScraper.Send
 
     public class SendEmail
     {
-        public static void EnviarEmail(string Comparacao, string nomeProdutoMercadoLivre, string precoProdutoMercadoLivre, string nomeProdutoMagazineLuiza, string precoProdutoMagazineLuiza)
+
+        public static string pedirEmail()
+        {
+            Console.WriteLine("Informe o e-mail para envio da comparação de produtos:");
+            string emailUsuario = Console.ReadLine();
+            return emailUsuario;
+        }
+
+        public static void EnviarEmail(string Comparacao, string nomeProdutoMercadoLivre, string precoProdutoMercadoLivre, string nomeProdutoMagazineLuiza, string precoProdutoMagazineLuiza, string emailUsuario)
         {
             // Configurações do servidor SMTP do Gmail
             string smtpServer = "smtp-mail.outlook.com"; // Servidor SMTP do Gmail
             int porta = 587; // Porta SMTP do Gmail para TLS/STARTTLS
-            string remetente = "larissatestetestado@outlook.com"; // Seu endereço de e-mail do Gmail
-            string senha = "testetestado!"; // Sua senha do Gmail
+            string remetente = "larissatestetestado@outlook.com"; // Seu endereço de e-mail 
+            string senha = "testetestado!"; // Sua senha do email
 
             // Configurar cliente SMTP
             using (SmtpClient client = new SmtpClient(smtpServer, porta))
@@ -27,7 +35,7 @@ namespace RoboScraper.Send
                 client.EnableSsl = true; // Habilitar SSL/TLS
 
                 // Construir mensagem de e-mail
-                MailMessage mensagem = new MailMessage(remetente, "larissa.f.oliveira8@aluno.senai.br")
+                MailMessage mensagem = new MailMessage(remetente, emailUsuario)
                 {
                     Subject = "Resultado da comparação de preços",
                     Body = $"Produto do Mercado Livre: {nomeProdutoMercadoLivre}\nPreço: R$ {precoProdutoMercadoLivre}\n" +

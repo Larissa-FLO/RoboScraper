@@ -13,7 +13,7 @@ public class SendZap
     // Verificar se o usuário deseja receber mensagem no whatsapp
     public static string verificarMensagem()
     {
-        Console.WriteLine("Deseja receber a comparação via WhatsApp?\nTecle 1 para sim e 2 para não");
+        Console.WriteLine("Deseja receber a comparação também via WhatsApp?\nTecle 1 para sim e 2 para não");
         string resposta = Console.ReadLine();
 
         if (resposta == "1")
