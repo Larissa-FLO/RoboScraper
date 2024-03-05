@@ -28,7 +28,7 @@ public class MagazineLuizaScraper
                     string firstProductPrice = priceElement.Text;
 
                     // Registra o log com o ID do produto
-                    RegistrarLog("001897", "wallacemaximus", DateTime.Now, "WebScraping - Magazine Luiza", "Sucesso", idProduto);
+                    RegistrarLog("2020", "LariGo", DateTime.Now, "WebScraping - Magazine Luiza", "Sucesso", idProduto);
 
                     // Retorna o preço
                     return firstProductPrice;
@@ -38,7 +38,7 @@ public class MagazineLuizaScraper
                     Console.WriteLine("Preço não encontrado.");
 
                     // Registra o log com o ID do produto
-                    RegistrarLog("001897", "wallacemaximus", DateTime.Now, "WebScraping - Magazine Luiza", "Preço não encontrado", idProduto);
+                    RegistrarLog("2020", "LariGo", DateTime.Now, "WebScraping - Magazine Luiza", "Preço não encontrado", idProduto);
 
                     return null;
                 }
@@ -49,7 +49,7 @@ public class MagazineLuizaScraper
             Console.WriteLine($"Erro ao acessar a página: {ex.Message}");
 
             // Registra o log com o ID do produto
-            RegistrarLog("001897", "wallacemaximus", DateTime.Now, "Web Scraping - Magazine Luiza", $"Erro: {ex.Message}", idProduto);
+            RegistrarLog("2020", "LariGo", DateTime.Now, "Web Scraping - Magazine Luiza", $"Erro: {ex.Message}", idProduto);
 
             return null;
         }
@@ -62,14 +62,14 @@ public class MagazineLuizaScraper
         {
             var log = new Log
             {
-                CodRob = codRob,
-                UsuRob = usuRob,
+                CodigoRobo = codRob,
+                UsuarioRobo = usuRob,
                 DateLog = dateLog,
-                Processo = processo,
-                InfLog = infLog,
-                IdProd = idProd
+                Etapa = processo,
+                InformacaoLog = infLog,
+                IdProdutoAPI = idProd
             };
-            context.Logs.Add(log);
+            context.LOGROBO.Add(log);
             context.SaveChanges();
         }
 

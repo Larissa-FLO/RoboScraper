@@ -26,7 +26,7 @@ public class MercadoLivreScraper
                 string firstProductPrice = firstProductPriceNode.InnerText.Trim();
 
                 // Registra o log com o ID do produto
-                RegistrarLog("001897", "wallacemaximus", DateTime.Now, "WebScraping - Mercado Livre", "Sucesso", idProduto);
+                RegistrarLog("2020", "LariGo", DateTime.Now, "WebScraping - Mercado Livre", "Sucesso", idProduto);
 
                 // Retorna o preço
                 return firstProductPrice;
@@ -36,7 +36,7 @@ public class MercadoLivreScraper
                 Console.WriteLine("Preço não encontrado.");
 
                 // Registra o log com o ID do produto
-                RegistrarLog("001897", "wallacemaximus", DateTime.Now, "WebScraping - Mercado Livre", "Preço não encontrado", idProduto);
+                RegistrarLog("2020", "LariGo", DateTime.Now, "WebScraping - Mercado Livre", "Preço não encontrado", idProduto);
 
                 return null;
             }
@@ -46,7 +46,7 @@ public class MercadoLivreScraper
             Console.WriteLine($"Erro ao acessar a página: {ex.Message}");
 
             // Registra o log com o ID do produto
-            RegistrarLog("001897", "wallacemaximus", DateTime.Now, "Web Scraping - Mercado Livre", $"Erro: {ex.Message}", idProduto);
+            RegistrarLog("2020", "LariGo", DateTime.Now, "Web Scraping - Mercado Livre", $"Erro: {ex.Message}", idProduto);
 
             return null;
         }
@@ -58,14 +58,14 @@ public class MercadoLivreScraper
         {
             var log = new Log
             {
-                CodRob = codRob,
-                UsuRob = usuRob,
+                CodigoRobo = codRob,
+                UsuarioRobo = usuRob,
                 DateLog = dateLog,
-                Processo = processo,
-                InfLog = infLog,
-                IdProd = idProd
+                Etapa = processo,
+                InformacaoLog = infLog,
+                IdProdutoAPI = idProd
             };
-            context.Logs.Add(log);
+            context.LOGROBO.Add(log);
             context.SaveChanges();
         }
     }

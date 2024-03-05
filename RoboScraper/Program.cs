@@ -16,7 +16,7 @@ using RoboScraper.Send;
 // Classe de contexto do banco de dados
 public class LogContext : DbContext
 {
-    public DbSet<Log> Logs { get; set; }
+    public DbSet<Log> LOGROBO { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -34,13 +34,13 @@ public class LogContext : DbContext
 public class Log
 {
     [Key]
-    public int IdLog { get; set; }
-    public string CodRob { get; set; }
-    public string UsuRob { get; set; }
+    public int iDlOG { get; set; }
+    public string CodigoRobo { get; set; }
+    public string UsuarioRobo { get; set; }
     public DateTime DateLog { get; set; }
-    public string Processo { get; set; }
-    public string InfLog { get; set; }
-    public int IdProd { get; set; }
+    public string Etapa { get; set; }
+    public string InformacaoLog { get; set; }
+    public int IdProdutoAPI { get; set; }
 }
 
 class Program
@@ -54,7 +54,7 @@ class Program
         string optZap = SendZap.verificarMensagem();
 
         // Definir o intervalo de tempo para 5 minutos (300.000 milissegundos)
-        int intervalo = 6000;
+        int intervalo = 300000;
 
         // Criar um temporizador que dispara a cada 5 minutos
         Timer timer = new Timer(state => VerificarNovoProduto(optZap, emailResposta), null, 0, intervalo);
@@ -106,7 +106,7 @@ class Program
                             // Registra um log no banco de dados apenas se o produto for novo
                             if (!ProdutoJaRegistrado(produto.Id))
                             {
-                                RegistrarLog("002020", "LariGo", DateTime.Now, "ConsultaAPI - Verificar Produto", "Sucesso", produto.Id);
+                                RegistrarLog("2020", "LariGo", DateTime.Now, "ConsultaAPI - Verificar Produto", "Sucesso", produto.Id);
 
                                 MercadoLivreScraper mercadoLivreScraper = new MercadoLivreScraper();
                                 string mercadoLivre = mercadoLivreScraper.ObterPreco(produto.Nome, produto.Id);
@@ -160,7 +160,7 @@ class Program
     {
         using (var context = new LogContext())
         {
-            return context.Logs.Any(log => log.IdProd == idProduto);
+            return context.LOGROBO.Any(log => log.IdProdutoAPI == idProduto && log.CodigoRobo=="2020");
         }
     }
 
@@ -171,14 +171,14 @@ class Program
         {
             var log = new Log
             {
-                CodRob = codRob,
-                UsuRob = usuRob,
+                CodigoRobo = codRob,
+                UsuarioRobo = usuRob,
                 DateLog = dateLog,
-                Processo = processo,
-                InfLog = infLog,
-                IdProd = idProd
+                Etapa = processo,
+                InformacaoLog = infLog,
+                IdProdutoAPI = idProd
             };
-            context.Logs.Add(log);
+            context.LOGROBO.Add(log);
             context.SaveChanges();
         }
     }
